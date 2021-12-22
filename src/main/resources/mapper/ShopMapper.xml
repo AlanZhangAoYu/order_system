@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ShopMapper">
+    <select id="selectAllShop" parameterType="pojo.Shop" resultType="pojo.Shop">
+        select * from `shop_info_tab` limit 0,10
+    </select>
+    <select id="selectShopByPara" parameterType="pojo.Shop" resultType="pojo.Shop">
+        select * from `shop_info_tab`
+        <where>
+            <if test="sid != null and sid != ''">
+                and `sid` = #{sid}
+            </if>
+            <if test="sname != null and sname != ''">
+                and `sname` like concat('%',#{sname},'%')
+            </if>
+            <if test="password != null and password != ''">
+                and `password` like #{password}
+            </if>
+            <if test="realname != null and realname != ''">
+                and `realname` like concat('%',#{realname},'%')
+            </if>
+            <if test="idcard != null and idcard != ''">
+                and `idcard` like concat('%',#{idcard},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and `phone` like concat('%',#{phone},'%')
+            </if>
+            <if test="address != null and address != ''">
+                and `address` like concat('%',#{address},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="insertShop" parameterType="pojo.Shop">
+        insert into `shop_info_tab`(`sid`,`sname`,`password`,`realname`,`idcard`,`phone`,`address`)
+        values(#{sid},#{sname},#{password},#{realname},#{idcard},#{phone},#{address})
+    </insert>
+    <update id="updateShopBySid" parameterType="pojo.Shop">
+        update `shop_info_tab`
+        <set>
+            <if test="sname != null and sname != ''">
+                `sname` = #{sname}
+            </if>
+            <if test="password != null and password != ''">
+                `password` = #{password}
+            </if>
+            <if test="realname != null and realname != ''">
+                `realname` = #{realname}
+            </if>
+            <if test="idcard != null and idcard != ''">
+                `idcard` = #{idcard}
+            </if>
+            <if test="phone != null and phone != ''">
+                `phone` = #{phone}
+            </if>
+            <if test="address != null and address != ''">
+                `address` = #{address}
+            </if>
+        </set>
+        where `sid` = #{sid}
+    </update>
+    <delete id="deleteShopBySid">
+        delete from `shop_info_tab` where `sid`= #{sid}
+    </delete>
+</mapper>
