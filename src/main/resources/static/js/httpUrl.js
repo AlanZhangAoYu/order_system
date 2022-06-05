@@ -1,0 +1,1 @@
+const httpUrl = 'http://127.0.0.2';
