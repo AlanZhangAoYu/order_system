@@ -33,14 +33,18 @@ public class ShopController {
     @RequestMapping(value = "/selectShopByPara",produces = "application/json; charset=utf-8")
     @ResponseBody
     public String selectShopByParaController(@RequestBody Shop shop){
-        shop.setPassword(Md5Util.getMd5Str(shop.getPassword()));
+        if(!"".equals(shop.getPassword())){
+            shop.setPassword(Md5Util.getMd5Str(shop.getPassword()));
+        }
         ArrayList<Shop> shopList=(ArrayList<Shop>) shopService.selectShopByShop(shop);
         return JSON.toJSONString(shopList);
     }
     @RequestMapping(value="/insertShop",produces = "application/json; charset=utf-8")
     @ResponseBody
     public String insertShopController(@RequestBody Shop shop){
-        shop.setPassword(Md5Util.getMd5Str(shop.getPassword()));
+        if(!"".equals(shop.getPassword())){
+            shop.setPassword(Md5Util.getMd5Str(shop.getPassword()));
+        }
         int row= shopService.insertShop(shop);
         //System.out.println("修改了"+row+"行数据");
         Map<String, Integer> map=new HashMap<>(1);
@@ -50,6 +54,9 @@ public class ShopController {
     @RequestMapping(value="/updateShopBySid",produces = "application/json; charset=utf-8")
     @ResponseBody
     public String updateShopBySidController(@RequestBody Shop shop){
+        if(!"".equals(shop.getPassword())){
+            shop.setPassword(Md5Util.getMd5Str(shop.getPassword()));
+        }
         int row= shopService.updateShopBySid(shop);
         //System.out.println("修改了"+row+"行数据");
         Map<String, Integer> map=new HashMap<>(1);

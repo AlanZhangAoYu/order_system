@@ -33,15 +33,18 @@ public class UserController {
     @RequestMapping(value = "/selectUserByPara",produces = "application/json; charset=utf-8")
     @ResponseBody
     public String selectUserByPara(@RequestBody User user){
-        user.setPassword(Md5Util.getMd5Str(user.getPassword()));
+        if(!"".equals(user.getPassword())){
+            user.setPassword(Md5Util.getMd5Str(user.getPassword()));
+        }
         ArrayList<User> userList=(ArrayList<User>) userService.selectUserByPara(user);
-        //System.out.println(json);
         return JSON.toJSONString(userList);
     }
     @RequestMapping(value="/insertUser",produces = "application/json; charset=utf-8")
     @ResponseBody
     public String insertUserController(@RequestBody User user){
-        user.setPassword(Md5Util.getMd5Str(user.getPassword()));
+        if(!"".equals(user.getPassword())){
+            user.setPassword(Md5Util.getMd5Str(user.getPassword()));
+        }
         int row=userService.insertUser(user);
         //System.out.println("修改了"+row+"行数据");
         Map<String, Integer> map=new HashMap<>(1);
@@ -51,6 +54,9 @@ public class UserController {
     @RequestMapping(value="/updateUserByUid",produces = "application/json; charset=utf-8")
     @ResponseBody
     public String updateUserByUidController(@RequestBody User user){
+        if(!"".equals(user.getPassword())){
+            user.setPassword(Md5Util.getMd5Str(user.getPassword()));
+        }
         int row=userService.updateUserByUid(user);
         Map<String,Integer> map=new HashMap<>(1);
         map.put("row",row);
